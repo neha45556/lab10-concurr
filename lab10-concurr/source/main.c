@@ -44,6 +44,7 @@ void TimerSet(unsigned long M){
 	_avr_timer_M = M;
 	_avr_timer_cntcurr = _avr_timer_M;
 } 
+
 unsigned char threeLeds = 0;
 unsigned char blinkingLED = 0;
 enum BL_States { BL_SMStart, BL_LedOff, BL_LedOn } BL_State;
@@ -72,6 +73,31 @@ void TickFct_BlinkLed() {
     }
 }
 
+enum states {init, threeled, blinkled} state;
+
+void combostates(){
+     switch(state){
+	case init:
+	  state = threeled;
+	   break;
+	case threeled:
+	  state = blinkled;
+	  break;
+	case blinkLed:
+          state = threeled;
+	  break;
+     }
+     switch(state){
+	case init:
+	  break;
+	case threeled:
+	  threeled();
+	  break;
+	case blinkled:
+	  TickFct_BlinkLed();
+	  break;
+     }
+}
 
 enum TL_States { start, TL_T0, TL_T1, TL_T2 } TL_State;
 
@@ -114,8 +140,7 @@ int main(void) {
     BL_State  = BL_SMStart;
     TL_State =  start;
     while (1) {
-        TickFct_BlinkLed();
-        threeLed();
+        combostates();
         while(!TimerFlag){}
         TimerFLag = 0;
     }
