@@ -15,6 +15,7 @@
 volatile unsigned char TimerFlag = 0;
 unsigned char i;
 unsigned char j;
+unsigned char a; 
 
 void TimerOn(){
     TCCR1B = 0x0B;
@@ -74,7 +75,7 @@ void TickFct_BlinkLed() {
     }
 }
 
-enum states {init, threeled, blinkled} state;
+enum states {init, threeled, blinkled,speaker} state;
 
 void combostates(){
      switch(state){
@@ -105,7 +106,37 @@ void combostates(){
 	   }
 	   j++;
 	  break;
+	     case speaker:
+		  if(k == 
+		  speakers();   
      }
+}
+
+enum speaker {init, speakON, speakOff} state;
+
+void speakers(){
+	switch(state){
+		case init:
+		   state = speakON;
+		   break;
+		case speakOn:
+		   state = speakOff;
+		   break;
+		case speakOff:
+		   state = speakON;
+		   break;
+		
+	}
+	switch(state){
+		case init:
+		break;
+		case speakOn:
+		   a = 0x10;
+		    break;
+		case speakOff:
+		   a = 0x00;
+		   break;
+	}
 }
 
 enum TL_States { start, TL_T0, TL_T1, TL_T2 } TL_State;
@@ -149,6 +180,7 @@ int main(void) {
     TimerOn();
 	i = 1;
 	j= 1;
+	k = 1;
     BL_State  = BL_SMStart;
     TL_State =  start;
     while (1) {
