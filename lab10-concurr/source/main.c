@@ -13,7 +13,7 @@
 #endif
 
 volatile unsigned char TimerFlag = 0;
-
+unsigned char i = 0; 
 
 void TimerOn(){
     TCCR1B = 0x0B;
@@ -91,10 +91,18 @@ void combostates(){
 	case init:
 	  break;
 	case threeled:
-	  threeled();
+	  if(i == 3){
+	  	threeled();
+		  i = 1;
+	  }
+	 i++;
 	  break;
 	case blinkled:
-	  TickFct_BlinkLed();
+	   if(j == 10){    
+	     TickFct_BlinkLed();
+		 j = 1;  
+	   }
+	   j++;
 	  break;
      }
 }
@@ -121,7 +129,8 @@ void threeLed(){
             threeLeds = 0x00;
             break;
         case TL_T0:
-            threeLeds = 0x01;
+            	threeLeds = 0x01;
+	    
             break;
         case TL_T1:
             threeLeds = 0x02;
@@ -135,8 +144,10 @@ int main(void) {
     /* Insert DDR and PORT initializations */
     DDRB = 0xFF; PORTB = 0x00;
     /* Insert your solution below */
-    TimerSet(1000);
+    TimerSet(100);
     TimerOn();
+	i = 1;
+	j= 1;
     BL_State  = BL_SMStart;
     TL_State =  start;
     while (1) {
