@@ -13,7 +13,8 @@
 #endif
 
 volatile unsigned char TimerFlag = 0;
-unsigned char i = 0; 
+unsigned char i;
+unsigned char j;
 
 void TimerOn(){
     TCCR1B = 0x0B;
