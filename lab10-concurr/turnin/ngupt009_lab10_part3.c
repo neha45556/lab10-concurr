@@ -1,5 +1,5 @@
-/*	Author: ssing072
- *  Partner(s) Name: Neha Gupta
+/*	Author: Neha Gupta
+ *  Partner(s) Name: surya
  *	Lab Section:
  *	Assignment: Lab #  Exercise #
  *	Exercise Description: [optional - include for your own benefit]
